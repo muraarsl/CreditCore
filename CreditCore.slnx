@@ -1,0 +1,7 @@
+<Solution>
+  <Project Path="CreditCore.API/CreditCore.API.csproj" />
+  <Project Path="CreditCore.Application/CreditCore.Application.csproj" />
+  <Project Path="CreditCore.Domain.Tests/CreditCore.Domain.Tests.csproj" />
+  <Project Path="CreditCore.Domain/CreditCore.Domain.csproj" />
+  <Project Path="CreditCore.Infrastructure/CreditCore.Infrastructure.csproj" />
+</Solution>
