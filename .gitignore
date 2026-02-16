@@ -5,3 +5,5 @@ obj/
 *.suo
 *.cache
 *.log
+/solution_dump.txt
+/dump için.txt
