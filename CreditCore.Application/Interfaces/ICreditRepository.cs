@@ -2,7 +2,7 @@
 
 namespace CreditCore.Application.Interfaces;
 
-public interface ICreditRepository
+public interface ICreditRepositoryx
 {
     Task AddAsync(CreditAggregate credit, CancellationToken cancellationToken = default);
     Task<CreditAggregate?> GetByIdAsync(Guid id, CancellationToken cancellationToken = default);

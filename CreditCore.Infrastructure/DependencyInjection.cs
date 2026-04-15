@@ -1,9 +1,11 @@
-﻿using CreditCore.Application.Interfaces;
+﻿
+using CreditCore.Infrastructure.Interfaces;
 using CreditCore.Infrastructure.Persistence;
 using CreditCore.Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 
 namespace CreditCore.Infrastructure
 {
@@ -17,8 +19,8 @@ namespace CreditCore.Infrastructure
                 options.UseSqlServer(
                     configuration.GetConnectionString("CreditDb")));
 
-            services.AddScoped<ICreditRepository, CreditRepository>();
-
+            
+            services.AddScoped <ICreditRepository, CreditRepository>();
             return services;
         }
     }
