@@ -1,12 +1,13 @@
-﻿using CreditCore.Application.Interfaces;
+﻿
 using CreditCore.Domain.Credit;
+using CreditCore.Infrastructure.Interfaces;
 using CreditCore.Infrastructure.Persistence;
 using CreditCore.Infrastructure.Persistence.Mapping;
 using Microsoft.EntityFrameworkCore;
 
 namespace CreditCore.Infrastructure.Repositories;
 
-public class CreditRepository : ICreditRepository
+public class CreditRepository :ICreditRepository
 {
     private readonly CreditDbContext _dbContext;
 

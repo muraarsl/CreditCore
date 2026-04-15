@@ -1,6 +1,6 @@
 ﻿using CreditCore.Domain.Credit;
 
-namespace CreditCore.Application.Interfaces;
+namespace CreditCore.Infrastructure.Interfaces;
 
 public interface ICreditRepository
 {

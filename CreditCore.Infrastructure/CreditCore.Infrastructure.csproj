@@ -26,6 +26,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CreditCore.Domain\CreditCore.Domain.csproj" />
+	  
   </ItemGroup>
 
 </Project>

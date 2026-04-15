@@ -57,18 +57,20 @@ public class CreditCalculationService : ICreditCalculationService
             );
         }).ToList();
 
+         MonthlyInterestCalculator monthlyInterestCalculator = new MonthlyInterestCalculator();
+         decimal monthlyInterestRate = monthlyInterestCalculator.Calculate(principal, annualInterestRate);
 
+        MonthlyInstallmentCalculator monthlyInstallmentCalculator = new MonthlyInstallmentCalculator();
+        decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(installmentDtos.First().PrincipalPayment,termInMonths, annualInterestRate,
+              installmentDtos.First().Kkdf
+               , installmentDtos.First().Bsmv);
 
         return new CreditCalculationResponse(
             Principal: principal,
             AnnualInterestRate: annualInterestRate,
-            MonthlyInterestRate: Math.Round(annualInterestRate / 12m / 100m, 6),
-            MonthlyInstallment: Math.Round(
-                installmentDtos.First().PrincipalPayment
-                + installmentDtos.First().InterestPayment
-                + installmentDtos.First().Kkdf
-                +installmentDtos.First().Bsmv,
-                2),
+            MonthlyInterestRate: monthlyInterestRate,
+            MonthlyInstallment:monthlyInstallment,
+                
             TotalPayment: Math.Round(
                 installmentDtos.Sum(x =>
                     x.PrincipalPayment
