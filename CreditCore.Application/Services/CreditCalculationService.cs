@@ -57,9 +57,9 @@ public class CreditCalculationService : ICreditCalculationService
             );
         }).ToList();
 
-         MonthlyInterestCalculator monthlyInterestCalculator = new MonthlyInterestCalculator();
-         decimal monthlyInterestRate = monthlyInterestCalculator.Calculate(principal, annualInterestRate);
-<<<<<<< HEAD
+
+        MonthlyInterestCalculator monthlyInterestCalculator = new MonthlyInterestCalculator();
+        decimal monthlyInterestRate = monthlyInterestCalculator.Calculate(principal, annualInterestRate);
 
         MonthlyInstallmentCalculator monthlyInstallmentCalculator = new MonthlyInstallmentCalculator();
         //decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(installmentDtos.First().PrincipalPayment,termInMonths, annualInterestRate,
@@ -69,13 +69,12 @@ public class CreditCalculationService : ICreditCalculationService
         decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(principal, termInMonths, annualInterestRate,
               installmentDtos.First().Kkdf
                , installmentDtos.First().Bsmv);
-=======
->>>>>>> 4addbe8a64b2b78b83a7dd468e4b2195d04260ee
 
-        MonthlyInstallmentCalculator monthlyInstallmentCalculator = new MonthlyInstallmentCalculator();
-        decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(installmentDtos.First().PrincipalPayment,termInMonths, annualInterestRate,
-              installmentDtos.First().Kkdf
-               , installmentDtos.First().Bsmv);
+
+        //MonthlyInstallmentCalculator monthlyInstallmentCalculator = new MonthlyInstallmentCalculator();
+        //decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(installmentDtos.First().PrincipalPayment,termInMonths, annualInterestRate,
+        //      installmentDtos.First().Kkdf
+        //       , installmentDtos.First().Bsmv);
 
         return new CreditCalculationResponse(
             Principal: principal,
