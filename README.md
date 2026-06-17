@@ -1,52 +1,52 @@
-
-### Katmanlar
+## Layers
 
 ### 🔹 API
-- HTTP endpoint’leri
-- Dependency Injection yapılandırması
-- Uygulama giriş noktası
+- HTTP endpoints
+- Dependency Injection configuration
+- Application entry point
 
 ### 🔹 Core
-- Domain modelleri
-- İş kuralları
-- Interface tanımları  
-➡️ **Infrastructure bağımsızdır**
+- Domain models
+- Business rules
+- Interface definitions  
+➡️ **Independent from Infrastructure**
 
 ### 🔹 Infrastructure
-- Core interface implementasyonları
-- Veri erişimi, dış servisler ve teknik detaylar
-- Değiştirilebilir ve izole yapı
+- Core interface implementations
+- Data access, external services, and technical concerns
+- Replaceable and isolated structure
 
-## 🏦 Domain Kapsamı
+## 🏦 Domain Scope
 - Loan lifecycle
-- Kredi limitleri
-- Geri ödeme planları
-- Accrual ve finansal hesaplamalar
-- EOD uyumlu süreçler
+- Credit limits
+- Repayment plans
+- Accrual and financial calculations
+- EOD-compatible processes
 
-## ⚙️ Bilinçli Olarak Kapsam Dışı Bırakılanlar
+## ⚙️ Intentionally Out of Scope
 
-Bu proje mimari odaklıdır. Aşağıdaki konular **bilinçli olarak** kapsam dışı bırakılmıştır:
+This project is architecture-focused. The following topics are **intentionally excluded** from the scope:
 
 - Authentication / Authorization
 - UI / Frontend
-- Gerçek veritabanı implementasyonu
+- Real database implementation
 - Production-level CI/CD
 
-> Amaç, **nasıl düşündüğünü ve sistemi nasıl kurguladığını** göstermektir.
+> The goal is to demonstrate **how the system is designed and how architectural decisions are made**.
 
-## 👤 Rol
+## 👤 Role
 
 **Senior Software Architect / Technical Lead**
 
-- Mimari tasarım
-- Domain modelleme
-- Teknik kararlar
-- Katmanlar arası sınırların belirlenmesi
+- Architectural design
+- Domain modeling
+- Technical decision-making
+- Defining boundaries between layers
 
-## 🚧 Durum
+## 🚧 Status
 
-Proje **aktif geliştirme aşamasındadır** ve mimari referans olarak evrilmektedir.
+The project is currently **under active development** and evolving as an architectural reference.
 
-Bu repository, core banking ve kredi sistemleri alanında  
-**mimari düşünce yapısını** göstermek amacıyla oluşturulmuştur.
+This repository was created to demonstrate an  
+**architectural mindset and system design approach**  
+within the domain of core banking and loan systems.
