@@ -20,18 +20,32 @@ builder.Services.AddCors(options =>
             .AllowAnyHeader()
             .AllowAnyMethod());
 });
+
+
+
 builder.Services.AddScoped<ICreditCalculator, CreditCalculator>();
 builder.Services.AddScoped<ITaxRateProvider, RedisTaxRateProvider>();
+//builder.Services.AddSingleton<IConnectionMultiplexer>(
+//    ConnectionMultiplexer.Connect("localhost:6379"));
 builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect("localhost:6379"));
+    ConnectionMultiplexer.Connect("redis:6379"));
+
 builder.Services.AddScoped<InterestTaxCalculator>();
 builder.Services.AddScoped<CreditCalculationService>();
 
 var app = builder.Build();
+app.MapGet("/health", () => Results.Ok(new
+{
+    Status = "Healthy",
+    Timestamp = DateTime.UtcNow
+}));
+
+
+app.UseSwagger();
+    app.UseSwaggerUI();
 if (app.Environment.IsDevelopment())
 {
-    app.UseSwagger();
-    app.UseSwaggerUI();
+ 
 }
 app.UseHttpsRedirection();
 app.UseCors("AllowReact");
