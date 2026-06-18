@@ -20,12 +20,16 @@ public sealed class RedisTaxRateProvider : ITaxRateProvider
 
     private decimal GetRate(string key, decimal fallback)
     {
-        var value = _db.StringGet(key);
-        if (value.HasValue &&
-            decimal.TryParse(value.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var rate))
+        try
         {
-            return rate;
+            var value = _db.StringGet(key);
+            if (value.HasValue &&
+                decimal.TryParse(value.ToString(), NumberStyles.Any, CultureInfo.InvariantCulture, out var rate))
+            {
+                return rate;
+            }
         }
+        catch { return fallback; }
         return fallback; // Redis yok / key yok / parse edilemedi
     }
 }

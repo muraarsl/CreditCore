@@ -10,8 +10,7 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddInfrastructure(builder.Configuration);
-//builder.Services.AddSingleton<IConnectionMultiplexer>(
-//    ConnectionMultiplexer.Connect("localhost:6379"));
+
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("AllowReact",
@@ -28,7 +27,7 @@ builder.Services.AddScoped<ITaxRateProvider, RedisTaxRateProvider>();
 //builder.Services.AddSingleton<IConnectionMultiplexer>(
 //    ConnectionMultiplexer.Connect("localhost:6379"));
 builder.Services.AddSingleton<IConnectionMultiplexer>(
-    ConnectionMultiplexer.Connect("redis:6379"));
+    ConnectionMultiplexer.Connect("localhost:6379,abortConnect=false"));
 
 builder.Services.AddScoped<InterestTaxCalculator>();
 builder.Services.AddScoped<CreditCalculationService>();
@@ -43,6 +42,8 @@ app.MapGet("/health", () => Results.Ok(new
 
 app.UseSwagger();
     app.UseSwaggerUI();
+
+
 if (app.Environment.IsDevelopment())
 {
  
