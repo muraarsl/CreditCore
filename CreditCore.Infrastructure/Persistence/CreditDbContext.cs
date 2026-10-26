@@ -12,6 +12,7 @@ namespace CreditCore.Infrastructure.Persistence
 
         public DbSet<CreditEntity> Credits { get; set; }
         public DbSet<InstallmentEntity> Installments { get; set; }
+        public DbSet<OutboxMessage> OutboxMessages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -62,6 +63,17 @@ namespace CreditCore.Infrastructure.Persistence
                 entity.Property(x => x.Kkdf).HasPrecision(18, 2).HasColumnName("KKDF_AMOUNT");
                 entity.Property(x => x.RemainingBalance).HasPrecision(18, 2).HasColumnName("REMAINING_BALANCE");
                 entity.Property(x => x.InstallmentNo).HasColumnName("INSTALLMENT_NO");
+            });
+
+            modelBuilder.Entity<OutboxMessage>(entity =>
+            {
+                entity.ToTable("OutboxMessages");
+                entity.HasKey(x => x.Id);
+                entity.Property(x => x.Type).HasMaxLength(256).IsRequired();
+                entity.Property(x => x.Payload).IsRequired();
+                entity.Property(x => x.OccurredOnUtc).IsRequired();
+                entity.Property(x => x.RetryCount).IsRequired();
+                entity.HasIndex(x => new { x.ProcessedOnUtc, x.OccurredOnUtc });
             });
         }
     }

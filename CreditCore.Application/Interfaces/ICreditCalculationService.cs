@@ -1,4 +1,6 @@
-﻿namespace CreditCore.Application.Interfaces;
+﻿using CreditCore.Application.Contracts;
+
+namespace CreditCore.Application.Interfaces;
 
 public interface ICreditCalculationService
 {

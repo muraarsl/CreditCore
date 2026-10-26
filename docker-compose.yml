@@ -7,6 +7,15 @@ services:
       - "8080:8080"
     depends_on:
       - redis
+      - rabbitmq
+    environment:
+      RabbitMQ__Host: rabbitmq
 
   redis:
     image: redis:7
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"

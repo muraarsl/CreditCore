@@ -1,7 +1,10 @@
 ﻿using CreditCore.API.Contracts;
+using CreditCore.Application.Contracts;
 using CreditCore.Application.Services;
 using CreditCore.Infrastructure.Persistence;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using CreditCore.Contracts;
 
 namespace CreditCore.API.Controllers;
 
@@ -49,28 +52,27 @@ public class CreditController : ControllerBase
             }).ToList()
         };
 
+        var occurredOnUtc = DateTime.UtcNow;
+
         await _dbContext.Credits.AddAsync(creditEntity);
+        await _dbContext.OutboxMessages.AddAsync(new OutboxMessage
+        {
+            Id = Guid.NewGuid(),
+            Type = "credit.calculated.v1",
+            Payload = JsonSerializer.Serialize(new CreditCalculatedEvent(
+                creditEntity.Id,
+                request.Principal,
+                request.TermInMonths,
+                request.AnnualInterestRate,
+                calculation.TotalPayment,
+                occurredOnUtc)),
+            OccurredOnUtc = occurredOnUtc
+        });
         await _dbContext.SaveChangesAsync();
 
         return Ok(calculation);
     }
 
 
-    [HttpPost]
-    public IActionResult Create([FromBody] CreateCreditRequest request)
-    {
-        //var credit = _applicationService.Create(
-        //    Guid.NewGuid(),
-        //    request.principal,
-        //    request.TermInMonths
-        //);
 
-        //return Ok(new
-        //{
-        //    credit.Id,
-        //    credit.Status
-        //});
-
-        return Ok();
-    }
 }

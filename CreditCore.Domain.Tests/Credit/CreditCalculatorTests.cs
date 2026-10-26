@@ -132,4 +132,30 @@ public class CreditCalculatorTests
         tax.Kkdf.Amount.Should().Be(150m);
     }
 
+    [Fact]
+    public void Create_Should_Create_Aggregate_With_A_Fully_Amortized_Schedule()
+    {
+        var credit = CreditAggregate.Create(
+            principal: 100_000m,
+            annualInterestRate: 12m,
+            termInMonths: 12,
+            kkdfRate: 0.15m,
+            bsmvRate: 0.10m,
+            calculator: _calculator);
+
+        credit.Installments.Should().HaveCount(12);
+        credit.Installments.Last().RemainingPrincipal.Should().Be(Money.Zero);
+    }
+
+    [Fact]
+    public void Constructor_Should_Copy_The_Installment_Collection()
+    {
+        var installments = _calculator.CalculateSchedule(new Money(10_000m), 10m, 12, 0m, 0m).ToList();
+
+        var credit = new CreditAggregate(10_000m, 10m, 12, installments);
+        installments.Clear();
+
+        credit.Installments.Should().HaveCount(12);
+    }
+
 }

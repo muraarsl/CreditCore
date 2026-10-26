@@ -34,7 +34,8 @@ namespace CreditCore.Infrastructure.Persistence.Migrations
                         .HasColumnName("ANNUAL_INTEREST_RATE");
 
                     b.Property<DateTime>("CreatedAt")
-                        .HasColumnType("datetime2");
+                        .HasColumnType("datetime2")
+                        .HasColumnName("CREATED_AT");
 
                     b.Property<decimal>("PrincipalAmount")
                         .HasPrecision(18, 2)
@@ -42,9 +43,11 @@ namespace CreditCore.Infrastructure.Persistence.Migrations
                         .HasColumnName("PRINCIPAL_AMOUNT");
 
                     b.Property<int>("TermInMonths")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("TERM_IN_MONTHS");
 
-                    b.HasKey("Id");
+                    b.HasKey("Id")
+                        .HasName("ID");
 
                     b.ToTable("Credits");
                 });
@@ -61,10 +64,13 @@ namespace CreditCore.Infrastructure.Persistence.Migrations
                         .HasColumnName("BSMV_AMOUNT");
 
                     b.Property<Guid>("CreditId")
-                        .HasColumnType("uniqueidentifier");
+                        .HasPrecision(18, 2)
+                        .HasColumnType("uniqueidentifier")
+                        .HasColumnName("CREDIT_ID");
 
                     b.Property<int>("InstallmentNo")
-                        .HasColumnType("int");
+                        .HasColumnType("int")
+                        .HasColumnName("INSTALLMENT_NO");
 
                     b.Property<decimal>("InterestPayment")
                         .HasPrecision(18, 2)
@@ -92,6 +98,40 @@ namespace CreditCore.Infrastructure.Persistence.Migrations
                         .IsUnique();
 
                     b.ToTable("Installments");
+                });
+
+            modelBuilder.Entity("CreditCore.Infrastructure.Persistence.OutboxMessage", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Error")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OccurredOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Payload")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("ProcessedOnUtc")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RetryCount")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Type")
+                        .IsRequired()
+                        .HasMaxLength(256)
+                        .HasColumnType("nvarchar(256)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProcessedOnUtc", "OccurredOnUtc");
+
+                    b.ToTable("OutboxMessages", (string)null);
                 });
 
             modelBuilder.Entity("CreditCore.Infrastructure.Persistence.InstallmentEntity", b =>

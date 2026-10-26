@@ -3,7 +3,6 @@ using CreditCore.Application.Contracts;
 using CreditCore.Application.Contracts.CreditCalculation;
 using CreditCore.Application.Interfaces;
 using CreditCore.Domain.Credit;
-using StackExchange.Redis;
 using System.Linq;
 
 namespace CreditCore.Application.Services;
@@ -34,8 +33,15 @@ public class CreditCalculationService : ICreditCalculationService
             ? _taxRateProvider.GetKkdfRate()
             : 0m;
     
-        var installments = _creditCalculator
-            .CalculateSchedule(new Money(principal), annualInterestRate, termInMonths, kkdfRate,bsmvRate);
+        var credit = CreditAggregate.Create(
+            principal,
+            annualInterestRate,
+            termInMonths,
+            kkdfRate,
+            bsmvRate,
+            _creditCalculator);
+
+        var installments = credit.Installments;
 
 
 
@@ -62,19 +68,11 @@ public class CreditCalculationService : ICreditCalculationService
         decimal monthlyInterestRate = monthlyInterestCalculator.Calculate(principal, annualInterestRate);
 
         MonthlyInstallmentCalculator monthlyInstallmentCalculator = new MonthlyInstallmentCalculator();
-        //decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(installmentDtos.First().PrincipalPayment,termInMonths, annualInterestRate,
-        //      installmentDtos.First().Kkdf
-        //       , installmentDtos.First().Bsmv);
+
 
         decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(principal, termInMonths, annualInterestRate,
-              installmentDtos.First().Kkdf
-               , installmentDtos.First().Bsmv);
+              installmentDtos[0].Kkdf, installmentDtos[0].Bsmv);
 
-
-        //MonthlyInstallmentCalculator monthlyInstallmentCalculator = new MonthlyInstallmentCalculator();
-        //decimal monthlyInstallment = monthlyInstallmentCalculator.Calculate(installmentDtos.First().PrincipalPayment,termInMonths, annualInterestRate,
-        //      installmentDtos.First().Kkdf
-        //       , installmentDtos.First().Bsmv);
 
         return new CreditCalculationResponse(
             Principal: principal,

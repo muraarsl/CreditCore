@@ -8,7 +8,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CreditCore.Domain\CreditCore.Domain.csproj" />
-    <ProjectReference Include="..\CreditCore.Infrastructure\CreditCore.Infrastructure.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
